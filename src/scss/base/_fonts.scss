@@ -2,6 +2,34 @@
 // Base / Fonts
 // ==========================================================================
 
+$Elsie: "Elsie";
+
+@include font-face($Elsie, "fonts/elsie-regular-webfont") {
+  font-style: normal;
+  font-weight: 400;
+}
+
+$Bellato: "Bellato";
+
+@include font-face($Bellato, "fonts/bellota-light-webfont") {
+  font-style: normal;
+  font-weight: 400;
+}
+
+$Kurale: "Kurale";
+
+@include font-face($Kurale, "fonts/kurale-regular-webfont") {
+  font-style: normal;
+  font-weight: 400;
+}
+
+$NixieOne: "NixieOne";
+
+@include font-face($NixieOne, "fonts/nixieone-regular-webfont") {
+  font-style: normal;
+  font-weight: 400;
+}
+
 // @include font-face(
 //     $font-foobar,
 //     "fonts/Foobar/Regular"
