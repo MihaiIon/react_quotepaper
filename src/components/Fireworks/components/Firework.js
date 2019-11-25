@@ -5,7 +5,7 @@ import { Transition } from "react-spring/renderprops";
 // Components
 import Shape from "../../Shape";
 
-function Firework({ show, tiny, shape }) {
+function Firework({ show, shape, tiny }) {
   return (
     <Transition
       items={show}

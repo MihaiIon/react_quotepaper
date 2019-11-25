@@ -29,6 +29,11 @@
   .c-shape.-left & {
     animation-timing-function: ease;
   }
+  @for $i from 1 to 5 {
+    .c-fireworks_tiny-firework:nth-child(#{$i}) & {
+      animation-delay: #{400ms * $i};
+    }
+  }
 }
 
 @keyframes rotate-shape {

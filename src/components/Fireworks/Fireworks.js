@@ -1,27 +1,27 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames-helper";
-import { Transition } from "react-spring/renderprops";
 
 // Constants
-import { FIREWORKS__TINY_FIREWORK__TRAIL } from "./core/constants";
-import { QUOTE_CYCLER__INTERVAL } from "../QuoteCycler/core/constants";
+import { QUOTE_CYCLER__INTERVAL, QUOTE_CYCLER__HIDE_TIME } from "../QuoteCycler/core/constants";
 
 // Helpers
 import { computeTinyShapeObjects, getFireworksStyles } from "./core/helpers";
-import { getSize } from "../../helpers";
 
 // Components
 import Firework from "./components/Firework";
 import TinyFirework from "./components/TinyFirework";
 
 function Fireworks({ show, right, top, shape }) {
-  const [tinyShapes, setTinyShapes] = useState(computeTinyShapeObjects());
+  const [tinyShapes, setTinyShapes] = useState(computeTinyShapeObjects(right, top));
   const styles = getFireworksStyles(right, top);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTinyShapes(computeTinyShapeObjects());
+      setTinyShapes(computeTinyShapeObjects(right, top, true));
+      setTimeout(() => {
+        setTinyShapes(computeTinyShapeObjects(right, top));
+      }, QUOTE_CYCLER__HIDE_TIME);
     }, QUOTE_CYCLER__INTERVAL);
     return () => clearInterval(interval);
   });
@@ -29,24 +29,11 @@ function Fireworks({ show, right, top, shape }) {
   return (
     <div className={cn("c-fireworks", ["-top", "-bottom", top], ["-right", "-left", right])} style={styles}>
       <Firework show={show} shape={shape} />
-      {/* <div className="c-fireworks_group">
-        <Transition
-          items={tinyShapes}
-          trail={FIREWORKS__TINY_FIREWORK__TRAIL}
-          keys={item => item.key}
-          from={{ opacity: 0, transform: `translate3d(0em, 0em, 0)` }}
-          enter={item => ({
-            opacity: 1,
-            transform: `translate3d(${getSize(item.x)},${getSize(item.y)},0)`
-          })}
-          leave={{
-            opacity: 0,
-            transform: "translate3d(0em, 0em, 0)"
-          }}
-        >
-          {item => props => <TinyFirework show={show} shape={shape} style={props} />}
-        </Transition>
-      </div> */}
+      <div className="c-fireworks_group">
+        {tinyShapes.map(item => (
+          <TinyFirework shape={shape} {...item} />
+        ))}
+      </div>
     </div>
   );
 }

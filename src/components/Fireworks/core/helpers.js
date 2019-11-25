@@ -4,9 +4,16 @@
 
 // Constants
 import { SHAPE__SIZE } from "../../Shape/core/constants";
+import {
+  FIREWORKS__TINY_FIREWORK__TRAIL,
+  FIREWORKS__TINY_FIREWORK__MIN_SPREAD_ANGLE,
+  FIREWORKS__TINY_FIREWORK__MAX_SPREAD_ANGLE,
+  FIREWORKS__TINY_FIREWORK__RADIUS,
+  FIREWORKS__SIZE
+} from "./constants";
 
 // Helpers
-import { getSize } from "../../../helpers";
+import { getSize, degreesToRadians, randomBetween } from "../../../helpers";
 
 /**
  * @param {*} isTop
@@ -32,16 +39,36 @@ export const getFireworksStyles = (isTop, isRight) => {
 };
 
 /**
- * @param {Boolean} isTop
  * @param {Boolean} isRight
- * @returns {[{x:Number, y:Number}]}
+ * @param {Boolean} isTop
+ * @param {Boolean} reset
+ * @returns {[{x:Number, y:Number, show:Boolean, key:Number}]}
  */
-export const computeTinyShapeObjects = (isTop, isRight) => {
-  const length = Math.floor(Math.random() * 2) + 2;
-  const id = new Date().getTime() % 1000;
-  return [
-    { x: 1, y: 1, key: id },
-    { x: 2, y: 2, key: id + 1 },
-    { x: 3, y: 3, key: id + 2 }
-  ];
+export const computeTinyShapeObjects = (isRight, isTop, reset = false) => {
+  const length = Math.floor(Math.random() * 2) + 3;
+  const objs = [0, 0, 0, 0].map((_, i) => ({
+    show: false,
+    delay: 0,
+    key: i,
+    x: 0,
+    y: 0
+  }));
+
+  // Update visibility and position
+  if (!reset) {
+    const sa = randomBetween(FIREWORKS__TINY_FIREWORK__MIN_SPREAD_ANGLE, FIREWORKS__TINY_FIREWORK__MAX_SPREAD_ANGLE);
+    const offset = FIREWORKS__SIZE.DEFAULT / 2;
+    const r = FIREWORKS__TINY_FIREWORK__RADIUS;
+    const start = (sa - 90) / -2;
+    const angle = sa / (length - 1);
+    for (let i = 0, x = null, y = null, rads = null; i < length; i += 1) {
+      rads = degreesToRadians(angle * i + start);
+      objs[i].show = true;
+      objs[i].delay = FIREWORKS__TINY_FIREWORK__TRAIL * i;
+      objs[i].x = (isRight ? 1 : -1) * (r * Math.sin(rads) + offset);
+      objs[i].y = (isTop ? -1 : 1) * (r * Math.cos(rads) + offset);
+    }
+  }
+
+  return objs;
 };
