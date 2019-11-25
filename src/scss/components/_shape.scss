@@ -1,0 +1,41 @@
+// ======================================================
+// Components / Shape
+// ======================================================
+
+.c-shape {
+  position: relative;
+  .c-fireworks.-top.-right & {
+    transform: rotateZ(25deg);
+  }
+  .c-fireworks.-top.-left & {
+    transform: rotateZ(-25deg);
+  }
+  .c-fireworks.-bottom.-right & {
+    transform: rotateZ(155deg);
+  }
+  .c-fireworks.-bottom.-left & {
+    transform: rotateZ(-155deg);
+  }
+}
+
+.c-shape_icon {
+  position: relative;
+  animation-name: rotate-shape;
+  animation-duration: $speed * 8;
+  animation-iteration-count: infinite;
+  .c-shape.-right & {
+    animation-timing-function: ease-out;
+  }
+  .c-shape.-left & {
+    animation-timing-function: ease;
+  }
+}
+
+@keyframes rotate-shape {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}

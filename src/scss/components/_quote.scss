@@ -1,0 +1,58 @@
+// ======================================================
+// Components / Quote
+// ======================================================
+
+$quote--text_size: 28px;
+$quote--author_size: 18px;
+$quote--author-color: rgba(255, 255, 255, 0.5);
+
+.c-quote,
+.c-quote_content {
+  width: 100%;
+  position: relative;
+}
+
+.c-quote_text,
+.c-quote_author {
+  font-family: $NixieOne;
+  letter-spacing: 2px;
+}
+
+.c-quote_text {
+  margin: 0;
+  text-align: center;
+  font-size: rem($quote--text_size);
+  color: $white;
+}
+
+.c-quote_author {
+  margin-top: rem($unit / 3);
+  margin-bottom: 0;
+  text-align: right;
+  &:before {
+    content: "-";
+    display: inline-block;
+    margin-right: rem(5px);
+  }
+}
+
+.c-quote_author,
+.c-quote_author:before {
+  font-size: rem($quote--author_size);
+  color: $quote--author-color;
+}
+
+.c-quote_overlay {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 0%;
+
+  &.-expand {
+    width: 100%;
+    transition: width $speed * 2 ease;
+  }
+}

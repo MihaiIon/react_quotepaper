@@ -13,7 +13,7 @@ function Quote({ show, text, author, primaryColor }) {
           </div>
         )}
       </Spring>
-      <div className={`c-quote_overlay ${show ? "-expand" : ""}`} style={{ backgroundColor: primaryColor }} />
+      <div className={`c-quote_overlay ${!show ? "-expand" : ""}`} style={{ backgroundColor: primaryColor }} />
     </div>
   );
 }
